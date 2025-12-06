@@ -6,6 +6,7 @@ import Strengths from '@/components/strengths';
 import Contact from '@/components/contact';
 import Footer from '@/components/footer';
 import Skills from '@/components/skills';
+import AiAssistant from '@/components/ai-assistant';
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         </div>
       </main>
       <Footer />
+      <AiAssistant />
     </div>
   );
 }
