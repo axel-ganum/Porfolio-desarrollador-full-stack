@@ -41,7 +41,7 @@ export default function Projects() {
                     src={projectImage.imageUrl}
                     alt={project.title}
                     fill
-                    className="object-cover"
+                    className="object-cover object-center"
                     data-ai-hint={projectImage.imageHint}
                   />
                 </div>
