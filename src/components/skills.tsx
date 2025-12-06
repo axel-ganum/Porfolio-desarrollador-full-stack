@@ -2,11 +2,11 @@ import { Badge } from "@/components/ui/badge";
 
 const skills = [
   'React', 'Next.js', 'TypeScript', 'JavaScript (ES6+)',
-  'Node.js', 'NestJS', 'Express', 'tRPC',
-  'HTML5', 'CSS3', 'Tailwind CSS', 'Sass',
-  'PostgreSQL', 'MongoDB', 'Prisma', 'TypeORM',
-  'GraphQL', 'REST APIs', 'WebSockets',
-  'Docker', 'Git', 'CI/CD', 'Jest'
+  'Node.js', 'NestJS', 'Express',
+  'HTML5', 'CSS3', 'Tailwind CSS',
+  'PostgreSQL', 'MongoDB', 'TypeORM',
+  'REST APIs', 'WebSockets',
+  'Docker', 'Git', 'Jest'
 ];
 
 export default function Skills() {

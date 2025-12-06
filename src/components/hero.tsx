@@ -24,7 +24,7 @@ export default function Hero() {
           <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">
             Construyo aplicaciones web{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">
-              modernas, utiles y de calidad
+              modernas, útiles y de calidad
             </span>
           </h2>
           <p className="mt-6 text-muted-foreground text-lg max-w-3xl mx-auto">
