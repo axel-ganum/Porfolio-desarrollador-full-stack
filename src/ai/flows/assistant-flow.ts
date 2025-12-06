@@ -36,6 +36,7 @@ const assistantFlow = ai.defineFlow(
   },
   async (message) => {
     const { output } = await ai.generate({
+      model: 'googleai/gemini-1.5-flash-latest',
       prompt: `
         Eres un asistente virtual amigable y profesional para el portafolio de Axel Ganum.
         Tu objetivo es responder preguntas sobre Axel, sus habilidades, experiencia y proyectos.
