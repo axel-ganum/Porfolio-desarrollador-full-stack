@@ -1,3 +1,28 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-portrait",
+      "description": "Portrait of Axel Ganum",
+      "imageUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjUwMjYxNTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "project-task-ia",
+      "description": "Task IA App project image",
+      "imageUrl": "https://images.unsplash.com/photo-1593086784152-b060f8109e0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29kZSUyMHNjcmVlbnxlbnwwfHx8fDE3NjQ5NTYwMDN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "code screen"
+    },
+    {
+      "id": "project-mind-maps",
+      "description": "Real-time mind maps project image",
+      "imageUrl": "https://images.unsplash.com/photo-1521575363954-393ae1439d33?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtaW5kJTIwbWFwfGVufDB8fHx8MTc2NTAwMjg5NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mind map"
+    },
+    {
+      "id": "project-ecommerce",
+      "description": "E-commerce platform project image",
+      "imageUrl": "https://images.unsplash.com/photo-1726137570707-528402375b7b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxlY29tbWVyY2UlMjBjaGVja291dHxlbnwwfHx8fDE3NjUwMzQ2NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ecommerce checkout"
+    }
+  ]
 }
