@@ -62,8 +62,8 @@ export default function AiAssistant() {
       </Button>
 
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50">
-          <Card className="w-80 md:w-96 shadow-2xl border-primary/30">
+        <div className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-6 z-50">
+          <Card className="w-full sm:w-80 md:w-96 shadow-2xl border-primary/30">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-lg">Asistente de IA</CardTitle>
               <Button variant="ghost" size="icon" onClick={toggleChat}>
