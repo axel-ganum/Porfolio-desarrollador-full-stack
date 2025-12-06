@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Card } from "./ui/card";
+import { sendContactMessage } from "@/ai/flows/contact-flow";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -32,6 +34,7 @@ const formSchema = z.object({
 
 export default function Contact() {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,13 +44,28 @@ export default function Contact() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values); // Simulate form submission
-    toast({
-      title: "¡Mensaje enviado!",
-      description: "Gracias por contactarme. Te responderé a la brevedad.",
-    });
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+    try {
+      const result = await sendContactMessage(values);
+      if (result.success) {
+        toast({
+          title: "¡Mensaje enviado!",
+          description: "Gracias por contactarme. Te responderé a la brevedad.",
+        });
+        form.reset();
+      } else {
+        throw new Error("El envío del formulario falló");
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Oh, oh. Algo salió mal.",
+        description: "No se pudo enviar tu mensaje. Por favor, intenta de nuevo.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -97,7 +115,9 @@ export default function Contact() {
                 </FormItem>
               )}
             />
-            <Button type="submit" size="lg" className="md:col-span-2 w-full shadow-lg">Enviar mensaje</Button>
+            <Button type="submit" size="lg" className="md:col-span-2 w-full shadow-lg" disabled={isSubmitting}>
+              {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
+            </Button>
           </form>
         </Form>
       </Card>
