@@ -8,11 +8,6 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
-export async function chatWithAssistant(message: string): Promise<string> {
-  const result = await assistantFlow(message);
-  return result;
-}
-
 const context = `
   Información sobre Axel Ganum:
   - Sobre mí: "Me apasiona crear software que funcione bien y que también se vea bien. Me gusta trabajar en proyectos donde puedo participar en todas las capas: idea → UI → backend → deploy. Me enfoco en código limpio, buenas prácticas, aprendizaje constante y disfruto mucho construir cosas nuevas."
@@ -28,6 +23,20 @@ const context = `
   - Contacto: "Para contactar a Axel, se puede usar el formulario en la sección de contacto de la página."
 `;
 
+const assistantPrompt = `
+  Eres un asistente virtual amigable y profesional para el portafolio de Axel Ganum.
+  Tu objetivo es responder preguntas sobre Axel, sus habilidades, experiencia y proyectos.
+  Utiliza ÚNICAMENTE la siguiente información para formular tus respuestas. No inventes nada.
+  Sé conciso y directo en tus respuestas. Habla en nombre del asistente, no como si fueras Axel.
+  Por ejemplo, di "Axel tiene experiencia en..." en lugar de "Tengo experiencia en...".
+
+  Contexto:
+  ${context}
+
+  Pregunta del usuario:
+  {{message}}
+`;
+
 const assistantFlow = ai.defineFlow(
   {
     name: 'assistantFlow',
@@ -37,20 +46,14 @@ const assistantFlow = ai.defineFlow(
   async (message) => {
     const { output } = await ai.generate({
       model: 'googleai/gemini-1.5-flash-latest',
-      prompt: `
-        Eres un asistente virtual amigable y profesional para el portafolio de Axel Ganum.
-        Tu objetivo es responder preguntas sobre Axel, sus habilidades, experiencia y proyectos.
-        Utiliza ÚNICAMENTE la siguiente información para formular tus respuestas. No inventes nada.
-        Sé conciso y directo en tus respuestas. Habla en nombre del asistente, no como si fueras Axel.
-        Por ejemplo, di "Axel tiene experiencia en..." en lugar de "Tengo experiencia en...".
-
-        Contexto:
-        ${context}
-
-        Pregunta del usuario:
-        ${message}
-      `,
+      prompt: assistantPrompt,
+      input: { message },
     });
-    return output!;
+    return output || 'Lo siento, no pude procesar tu solicitud en este momento.';
   }
 );
+
+export async function chatWithAssistant(message: string): Promise<string> {
+  // Ahora llamamos directamente al flujo de Genkit.
+  return await assistantFlow(message);
+}
