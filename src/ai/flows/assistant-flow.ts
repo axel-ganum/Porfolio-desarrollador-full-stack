@@ -46,7 +46,9 @@ const assistantFlow = ai.defineFlow(
   async (message) => {
     const { output } = await ai.generate({
       model: 'googleai/gemini-1.5-flash-latest',
-      prompt: assistantPrompt,
+      prompt: {
+        text: assistantPrompt,
+      },
       input: { message },
     });
     return output || 'Lo siento, no pude procesar tu solicitud en este momento.';
@@ -54,6 +56,5 @@ const assistantFlow = ai.defineFlow(
 );
 
 export async function chatWithAssistant(message: string): Promise<string> {
-  // Ahora llamamos directamente al flujo de Genkit.
   return await assistantFlow(message);
 }
