@@ -23,19 +23,24 @@ const context = `
   - Contacto: "Para contactar a Axel, se puede usar el formulario en la sección de contacto de la página."
 `;
 
-const assistantPrompt = `
-  Eres un asistente virtual amigable y profesional para el portafolio de Axel Ganum.
-  Tu objetivo es responder preguntas sobre Axel, sus habilidades, experiencia y proyectos.
-  Utiliza ÚNICAMENTE la siguiente información para formular tus respuestas. No inventes nada.
-  Sé conciso y directo en tus respuestas. Habla en nombre del asistente, no como si fueras Axel.
-  Por ejemplo, di "Axel tiene experiencia en..." en lugar de "Tengo experiencia en...".
+const assistantPrompt = ai.definePrompt({
+    name: 'assistantPrompt',
+    input: { schema: z.string() },
+    output: { schema: z.string() },
+    prompt: `
+        Eres un asistente virtual amigable y profesional para el portafolio de Axel Ganum.
+        Tu objetivo es responder preguntas sobre Axel, sus habilidades, experiencia y proyectos.
+        Utiliza ÚNICAMENTE la siguiente información para formular tus respuestas. No inventes nada.
+        Sé conciso y directo en tus respuestas. Habla en nombre del asistente, no como si fueras Axel.
+        Por ejemplo, di "Axel tiene experiencia en..." en lugar de "Tengo experiencia en...".
 
-  Contexto:
-  ${context}
+        Contexto:
+        ${context}
 
-  Pregunta del usuario:
-  {{message}}
-`;
+        Pregunta del usuario:
+        {{{input}}}
+    `,
+});
 
 const assistantFlow = ai.defineFlow(
   {
@@ -44,13 +49,7 @@ const assistantFlow = ai.defineFlow(
     outputSchema: z.string(),
   },
   async (message) => {
-    const { output } = await ai.generate({
-      model: 'googleai/gemini-1.5-flash-latest',
-      prompt: {
-        text: assistantPrompt,
-      },
-      input: { message },
-    });
+    const { output } = await assistantPrompt(message);
     return output || 'Lo siento, no pude procesar tu solicitud en este momento.';
   }
 );
