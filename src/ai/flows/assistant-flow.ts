@@ -24,10 +24,10 @@ const context = `
 `;
 
 const assistantPrompt = ai.definePrompt({
-    name: 'assistantPrompt',
-    input: { schema: z.string() },
-    output: { schema: z.string() },
-    prompt: `
+  name: 'assistantPrompt',
+  input: { schema: z.string() },
+  output: { schema: z.string() },
+  prompt: `
         Eres un asistente virtual amigable y profesional para el portafolio de Axel Ganum.
         Tu objetivo es responder preguntas sobre Axel, sus habilidades, experiencia y proyectos.
         Utiliza ÚNICAMENTE la siguiente información para formular tus respuestas. No inventes nada.
