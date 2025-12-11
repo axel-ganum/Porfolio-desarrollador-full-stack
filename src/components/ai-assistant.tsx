@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from './ui/card';
 import { Input } from './ui/input';
@@ -18,11 +18,20 @@ export default function AiAssistant() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTo({
+        top: scrollAreaRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [messages]);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
     if (!isOpen && messages.length === 0) {
-      // Add initial greeting message when chat opens for the first time
       setMessages([
         { role: 'assistant', content: "¡Hola! Soy el asistente de Axel. ¿En qué puedo ayudarte? Puedes preguntarme sobre sus proyectos, habilidades o experiencia." }
       ]);
@@ -31,7 +40,7 @@ export default function AiAssistant() {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isLoading) return;
 
     const userMessage: Message = { role: 'user', content: input };
     setMessages((prev) => [...prev, userMessage]);
@@ -43,6 +52,7 @@ export default function AiAssistant() {
       const assistantMessage: Message = { role: 'assistant', content: assistantResponse };
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
+      console.error("Error from AI assistant:", error);
       const errorMessage: Message = { role: 'assistant', content: 'Lo siento, algo salió mal. Por favor, intenta de nuevo.' };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
@@ -71,7 +81,7 @@ export default function AiAssistant() {
               </Button>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-80 pr-4">
+              <ScrollArea className="h-80 pr-4" ref={scrollAreaRef}>
                 <div className="space-y-4">
                   {messages.map((message, index) => (
                     <div

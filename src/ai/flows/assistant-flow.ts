@@ -29,7 +29,7 @@ export const assistantFlow = ai.defineFlow(
     inputSchema: z.string(),
     outputSchema: z.string(),
   },
-  async (prompt) => {
+  async (query) => {
     const llmResponse = await ai.generate({
       prompt: `
         Eres un asistente virtual amigable y profesional para el portafolio de Axel Ganum.
@@ -42,7 +42,7 @@ export const assistantFlow = ai.defineFlow(
         ${context}
 
         Pregunta del usuario:
-        ${prompt}
+        ${query}
     `,
       model: 'googleai/gemini-pro',
       config: {
