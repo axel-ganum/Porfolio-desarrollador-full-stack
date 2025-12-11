@@ -23,11 +23,15 @@ const context = `
   - Contacto: "Para contactar a Axel, se puede usar el formulario en la sección de contacto de la página."
 `;
 
-const assistantPrompt = ai.definePrompt({
-  name: 'assistantPrompt',
-  input: { schema: z.string() },
-  output: { schema: z.string() },
-  prompt: `
+export const assistantFlow = ai.defineFlow(
+  {
+    name: 'assistantFlow',
+    inputSchema: z.string(),
+    outputSchema: z.string(),
+  },
+  async (prompt) => {
+    const llmResponse = await ai.generate({
+      prompt: `
         Eres un asistente virtual amigable y profesional para el portafolio de Axel Ganum.
         Tu objetivo es responder preguntas sobre Axel, sus habilidades, experiencia y proyectos.
         Utiliza ÚNICAMENTE la siguiente información para formular tus respuestas. No inventes nada.
@@ -38,22 +42,19 @@ const assistantPrompt = ai.definePrompt({
         ${context}
 
         Pregunta del usuario:
-        {{{input}}}
+        ${prompt}
     `,
-});
+      model: 'googleai/gemini-pro',
+      config: {
+        temperature: 0.5,
+      },
+    });
 
-const assistantFlow = ai.defineFlow(
-  {
-    name: 'assistantFlow',
-    inputSchema: z.string(),
-    outputSchema: z.string(),
-  },
-  async (message) => {
-    const { output } = await assistantPrompt(message);
-    return output || 'Lo siento, no pude procesar tu solicitud en este momento.';
+    return llmResponse.text;
   }
 );
 
 export async function chatWithAssistant(message: string): Promise<string> {
-  return await assistantFlow(message);
+  const response = await assistantFlow(message);
+  return response || 'Lo siento, no pude procesar tu solicitud en este momento.';
 }
