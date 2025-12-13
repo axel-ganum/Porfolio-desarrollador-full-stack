@@ -44,9 +44,12 @@ export const assistantFlow = ai.defineFlow(
         Pregunta del usuario:
         ${query}
     `,
-      model: 'googleai/gemini-pro',
+      model: 'gemini-pro', // Modelo básico de Gemini
       config: {
-        temperature: 0.5,
+        temperature: 0.7,
+        topP: 1.0,
+        topK: 40,
+        maxOutputTokens: 2048,
       },
     });
 
@@ -55,6 +58,16 @@ export const assistantFlow = ai.defineFlow(
 );
 
 export async function chatWithAssistant(message: string): Promise<string> {
-  const response = await assistantFlow(message);
-  return response || 'Lo siento, no pude procesar tu solicitud en este momento.';
+  try {
+    console.log('Procesando mensaje:', message);
+    const response = await assistantFlow(message);
+    console.log('Respuesta generada:', response);
+    return response || 'No pude generar una respuesta en este momento. ¿Podrías reformular tu pregunta?';
+  } catch (error) {
+    console.error('Error en chatWithAssistant:', {
+      error,
+      message: error instanceof Error ? error.message : 'Error desconocido',
+    });
+    return 'Lo siento, estoy teniendo problemas para conectarme con el servicio de IA. Por favor, intenta de nuevo más tarde.';
+  }
 }

@@ -48,12 +48,30 @@ export default function AiAssistant() {
     setIsLoading(true);
 
     try {
+      console.log('Enviando mensaje al asistente...');
       const assistantResponse = await chatWithAssistant(input);
-      const assistantMessage: Message = { role: 'assistant', content: assistantResponse };
+      console.log('Respuesta del asistente recibida:', assistantResponse);
+      
+      if (!assistantResponse) {
+        throw new Error('La respuesta del asistente está vacía');
+      }
+      
+      const assistantMessage: Message = { 
+        role: 'assistant', 
+        content: assistantResponse || 'No pude generar una respuesta. Por favor, intenta de nuevo.' 
+      };
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      console.error("Error from AI assistant:", error);
-      const errorMessage: Message = { role: 'assistant', content: 'Lo siento, algo salió mal. Por favor, intenta de nuevo.' };
+      console.error('Error en handleSendMessage:', {
+        error,
+        message: error instanceof Error ? error.message : 'Error desconocido',
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+      
+      const errorMessage: Message = { 
+        role: 'assistant', 
+        content: `Lo siento, ocurrió un error: ${error instanceof Error ? error.message : 'Error desconocido'}. Por favor, inténtalo de nuevo más tarde.` 
+      };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
