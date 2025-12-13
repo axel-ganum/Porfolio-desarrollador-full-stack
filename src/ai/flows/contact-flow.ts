@@ -1,4 +1,6 @@
-'use server';
+'server';
+import { z } from 'zod';
+
 /**
  * @fileOverview A contact form flow.
  *
@@ -7,45 +9,53 @@
  * - ContactFormOutput - The return type for the sendContactMessage function.
  */
 
-import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
-
 const ContactFormInputSchema = z.object({
-  name: z.string().describe('The name of the person sending the message.'),
-  email: z
-    .string()
-    .email()
-    .describe('The email of the person sending the message.'),
-  message: z.string().describe('The message content.'),
+  name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
+  email: z.string().email('Por favor ingresa un correo electrónico válido'),
+  message: z.string().min(10, 'El mensaje debe tener al menos 10 caracteres'),
 });
+
 export type ContactFormInput = z.infer<typeof ContactFormInputSchema>;
 
 const ContactFormOutputSchema = z.object({
   success: z.boolean(),
+  message: z.string().optional(),
 });
+
 export type ContactFormOutput = z.infer<typeof ContactFormOutputSchema>;
 
 export async function sendContactMessage(
   input: ContactFormInput
 ): Promise<ContactFormOutput> {
-  return contactFlow(input);
-}
-
-const contactFlow = ai.defineFlow(
-  {
-    name: 'contactFlow',
-    inputSchema: ContactFormInputSchema,
-    outputSchema: ContactFormOutputSchema,
-  },
-  async (input) => {
-    // In a real application, you would integrate an email service like Resend or Nodemailer here.
-    // For now, we'll just log it to the console.
-    console.log('Received contact form submission:');
-    console.log('Name:', input.name);
-    console.log('Email:', input.email);
-    console.log('Message:', input.message);
+  try {
+    // Validar la entrada
+    const validatedInput = ContactFormInputSchema.parse(input);
     
-    // Simulate a successful email sending.
-    return { success: true };
+    // Aquí iría la lógica para enviar el correo
+    console.log('Nuevo mensaje de contacto recibido:');
+    console.log('Nombre:', validatedInput.name);
+    console.log('Email:', validatedInput.email);
+    console.log('Mensaje:', validatedInput.message);
+    
+    // Simular un envío exitoso
+    return { 
+      success: true, 
+      message: '¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.' 
+    };
+    
+  } catch (error) {
+    console.error('Error al procesar el formulario de contacto:', error);
+    
+    if (error instanceof z.ZodError) {
+      return { 
+        success: false, 
+        message: 'Error de validación: ' + error.errors.map(e => e.message).join(', ') 
+      };
+    }
+    
+    return { 
+      success: false, 
+      message: 'Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.' 
+    };
   }
-);
+}

@@ -1,12 +1,6 @@
 'use server';
-/**
- * @fileOverview An AI assistant for Axel Ganum's portfolio.
- *
- * - chatWithAssistant - A function that handles conversation with the assistant.
- */
 
-import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
+import { model } from '@/ai/genkit';
 
 const context = `
   Información sobre Axel Ganum:
@@ -23,51 +17,52 @@ const context = `
   - Contacto: "Para contactar a Axel, se puede usar el formulario en la sección de contacto de la página."
 `;
 
-export const assistantFlow = ai.defineFlow(
-  {
-    name: 'assistantFlow',
-    inputSchema: z.string(),
-    outputSchema: z.string(),
-  },
-  async (query) => {
-    const llmResponse = await ai.generate({
-      prompt: `
-        Eres un asistente virtual amigable y profesional para el portafolio de Axel Ganum.
-        Tu objetivo es responder preguntas sobre Axel, sus habilidades, experiencia y proyectos.
-        Utiliza ÚNICAMENTE la siguiente información para formular tus respuestas. No inventes nada.
-        Sé conciso y directo en tus respuestas. Habla en nombre del asistente, no como si fueras Axel.
-        Por ejemplo, di "Axel tiene experiencia en..." en lugar de "Tengo experiencia en...".
+export async function chatWithAssistant(message: string): Promise<string> {
+  try {
+    console.log('Pregunta recibida:', message);
+    
+    if (!message.trim()) {
+      return '¿En qué puedo ayudarte hoy? Puedes preguntarme sobre los proyectos, habilidades o experiencia de Axel.';
+    }
+    
+    // Crear el prompt con el contexto
+    const prompt = `Eres un asistente amigable para el portafolio de Axel Ganum. 
+    Responde de manera natural y conversacional, como si estuvieras teniendo una charla informal.
+    Usa emojis ocasionalmente para hacer la conversación más amena. 
+    Formatea las respuestas en markdown para mejor legibilidad.
+    
+    Información sobre Axel:
+    ${context}
+    
+    Pregunta del usuario: "${message}"
+    
+    Por favor, responde de manera clara, concisa y amigable, como si estuvieras teniendo una conversación.`;
 
-        Contexto:
-        ${context}
-
-        Pregunta del usuario:
-        ${query}
-    `,
-      model: 'gemini-pro', // Modelo básico de Gemini
-      config: {
+    // Generar la respuesta
+    const result = await model.generateContent({
+      contents: [{
+        role: 'user',
+        parts: [{ text: prompt }]
+      }],
+      generationConfig: {
         temperature: 0.7,
-        topP: 1.0,
-        topK: 40,
-        maxOutputTokens: 2048,
+        maxOutputTokens: 500,
       },
     });
 
-    return llmResponse.text;
-  }
-);
-
-export async function chatWithAssistant(message: string): Promise<string> {
-  try {
-    console.log('Procesando mensaje:', message);
-    const response = await assistantFlow(message);
-    console.log('Respuesta generada:', response);
-    return response || 'No pude generar una respuesta en este momento. ¿Podrías reformular tu pregunta?';
+    const response = await result.response;
+    const text = response.text();
+    
+    console.log('Respuesta generada con éxito');
+    return text;
+    
   } catch (error) {
     console.error('Error en chatWithAssistant:', {
       error,
       message: error instanceof Error ? error.message : 'Error desconocido',
     });
-    return 'Lo siento, estoy teniendo problemas para conectarme con el servicio de IA. Por favor, intenta de nuevo más tarde.';
+    
+    return 'Disculpa, estoy teniendo problemas para conectarme con el servicio de IA. ' +
+           'Puedes contactar directamente a Axel a través del formulario de contacto.';
   }
 }
