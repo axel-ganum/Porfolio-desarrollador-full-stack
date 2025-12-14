@@ -19,7 +19,8 @@ const projectsData = [
     title: 'Mapas Mentales en Tiempo Real',
     description: 'App colaborativa para trabajo en equipo en tiempo real. WebSockets + React + Node.js.',
     tags: ['WebSockets', 'Node.js', 'React'],
-    videoUrl: 'https://storage.googleapis.com/aifirebase/us-central1/projects/mind-maps.mp4'
+    videoUrl: 'https://storage.googleapis.com/aifirebase/us-central1/projects/mind-maps.mp4',
+    projectUrl: 'https://gorgeous-druid-40dd81.netlify.app/'
   },
   {
     id: 'project-ecommerce',
@@ -82,6 +83,17 @@ export default function Projects() {
                     </Badge>
                   ))}
                 </div>
+                {project.projectUrl && (
+                  <a 
+                    href={project.projectUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Ver Proyecto
+                  </a>
+                )}
               </div>
             </Card>
           );
