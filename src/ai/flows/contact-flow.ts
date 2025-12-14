@@ -31,13 +31,21 @@ export async function sendContactMessage(
     // Validar la entrada
     const validatedInput = ContactFormInputSchema.parse(input);
     
-    // Aquí iría la lógica para enviar el correo
-    console.log('Nuevo mensaje de contacto recibido:');
-    console.log('Nombre:', validatedInput.name);
-    console.log('Email:', validatedInput.email);
-    console.log('Mensaje:', validatedInput.message);
+    // Hacer una petición a la API de contacto
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(validatedInput),
+    });
+
+    const data = await response.json();
     
-    // Simular un envío exitoso
+    if (!response.ok) {
+      throw new Error(data.message || 'Error al enviar el mensaje');
+    }
+    
     return { 
       success: true, 
       message: '¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.' 
