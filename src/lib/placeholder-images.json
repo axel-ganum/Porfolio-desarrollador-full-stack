@@ -9,8 +9,8 @@
     {
       "id": "project-task-ia",
       "description": "Task IA App project image",
-      "imageUrl": "https://images.unsplash.com/photo-1593086784152-b060f8109e0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29kZSUyMHNjcmVlbnxlbnwwfHx8fDE3NjQ5NTYwMDN8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "code screen"
+      "imageUrl": "/images/projects/task-ia.png",
+      "imageHint": "Task IA App interface"
     },
     {
       "id": "project-mind-maps",

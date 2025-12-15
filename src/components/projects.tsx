@@ -10,14 +10,15 @@ const projectsData = [
   {
     id: 'project-task-ia',
     title: 'Task IA App',
-    description: 'Aplicación con generación automática de tareas usando modelos DeepSeek (Hugging Face). Backend NestJS, frontend React, arquitectura modular.',
+    description: 'Aplicación web para gestión de tareas con generación automática de tareas usando IA (DeepSeek de Hugging Face). Desarrollada con React.js y Tailwind CSS en el frontend, y NestJS en el backend. Utiliza Supabase como base de datos. El backend está desplegado en Render (puede tardar unos segundos en cargar inicialmente por ser un plan gratuito) y el frontend en Netlify. La aplicación demuestra integración con IA, autenticación y gestión de estado avanzada.',
     tags: ['NestJS', 'React', 'IA'],
-    videoUrl: 'https://storage.googleapis.com/aifirebase/us-central1/projects/task-ia.mp4'
+    videoUrl: 'https://storage.googleapis.com/aifirebase/us-central1/projects/task-ia.mp4',
+    projectUrl: 'https://taka-ai.netlify.app/'
   },
   {
     id: 'project-mind-maps',
     title: 'Mapas Mentales en Tiempo Real',
-    description: 'App colaborativa para trabajo en equipo en tiempo real. WebSockets + React + Node.js.',
+    description: 'Aplicación colaborativa para creación de mapas mentales en tiempo real, desarrollada con React en el frontend y Express.js en el backend. Utiliza MongoDB Atlas como base de datos en la nube. La aplicación está desplegada en Render (puede tardar unos segundos en cargar inicialmente por ser un plan gratuito) y soporta múltiples usuarios conectados simultáneamente. Incluye funcionalidades de arrastrar y soltar, edición en tiempo real y sincronización instantánea entre usuarios.',
     tags: ['WebSockets', 'Node.js', 'React'],
     videoUrl: 'https://storage.googleapis.com/aifirebase/us-central1/projects/mind-maps.mp4',
     projectUrl: 'https://gorgeous-druid-40dd81.netlify.app/'
