@@ -53,14 +53,14 @@ export default function Projects() {
               onMouseLeave={() => setHoveredProject(null)}
             >
               {projectImage && (
-                <div className="relative h-40 w-full">
+                <div className={`relative w-full overflow-hidden ${project.id === 'project-task-ia' ? 'h-56' : 'h-48'}`} style={{ paddingTop: project.id === 'project-task-ia' ? '90px' : '30px' }}>
                   {isHovered ? (
                     <video
                       src={project.videoUrl}
                       autoPlay
                       loop
                       muted
-                      className="object-cover object-center w-full h-full"
+                      className={`w-full h-full ${project.id === 'project-task-ia' ? 'object-cover object-top -mt-5' : 'object-cover object-center'}`}
                       playsInline
                     />
                   ) : (
@@ -68,7 +68,7 @@ export default function Projects() {
                       src={projectImage.imageUrl}
                       alt={project.title}
                       fill
-                      className="object-cover object-center"
+                      className={`w-full h-full ${project.id === 'project-task-ia' ? 'object-cover object-top -mt-5' : 'object-cover object-center'}`}
                       data-ai-hint={projectImage.imageHint}
                     />
                   )}
