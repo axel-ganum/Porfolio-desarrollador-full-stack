@@ -36,11 +36,13 @@ export default function Projects() {
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 
   return (
-    <section id="proyectos">
-      <h3 className="text-3xl font-bold mb-2">Proyectos destacados</h3>
-      <p className="text-muted-foreground mb-10">Una selección cuidada de lo que sé construir: IA, tiempo real, APIs, frontend y backend.</p>
+    <section id="proyectos" className="pb-0 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 className="text-3xl font-bold mb-2">Proyectos destacados</h3>
+        <p className="text-muted-foreground mb-10">Una selección cuidada de lo que sé construir: IA, tiempo real, APIs, frontend y backend.</p>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 -mx-4">
         {projectsData.map((project) => {
           const projectImage = PlaceHolderImages.find(p => p.id === project.id);
           const isHovered = hoveredProject === project.id;
@@ -48,33 +50,66 @@ export default function Projects() {
           return (
             <Card 
               key={project.id} 
-              className="bg-card border-primary/20 hover:scale-[1.03] transition-transform duration-300 flex flex-col overflow-hidden rounded-2xl"
+              className="bg-card border border-primary/20 hover:scale-[1.03] transition-transform duration-300 flex flex-col overflow-hidden rounded-2xl shadow-md"
               onMouseEnter={() => setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
             >
               {projectImage && (
-                <div className={`relative w-full overflow-hidden ${project.id === 'project-task-ia' ? 'h-56' : 'h-48'}`} style={{ paddingTop: project.id === 'project-task-ia' ? '90px' : '30px' }}>
-                  {isHovered ? (
+                <div className="relative w-full" style={{
+                    aspectRatio: '16/9',
+                    position: 'relative',
+                    backgroundColor: 'transparent',
+                    overflow: 'hidden'
+                  }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'center'
+                  }}>
+                    {isHovered ? (
                     <video
                       src={project.videoUrl}
                       autoPlay
                       loop
                       muted
-                      className={`w-full h-full ${project.id === 'project-task-ia' ? 'object-cover object-top -mt-5' : 'object-cover object-center'}`}
+                      className={`w-full h-full ${
+                        project.id === 'project-task-ia' 
+                          ? 'w-full h-full object-cover object-top'
+                          : project.id === 'project-mind-maps' 
+                            ? 'w-full h-full object-cover object-top'
+                            : 'w-full h-full object-cover object-top'
+                      }`}
                       playsInline
                     />
                   ) : (
-                    <Image
-                      src={projectImage.imageUrl}
-                      alt={project.title}
-                      fill
-                      className={`w-full h-full ${project.id === 'project-task-ia' ? 'object-cover object-top -mt-5' : 'object-cover object-center'}`}
-                      data-ai-hint={projectImage.imageHint}
-                    />
+                    <div style={{
+                        position: 'relative',
+                        width: '100%',
+                        height: '100%',
+                        overflow: 'hidden'
+                      }}>
+                        <Image
+                          src={projectImage.imageUrl}
+                          alt={project.title}
+                          fill
+                          style={{
+                            objectFit: 'cover',
+                            objectPosition: project.id === 'project-task-ia' ? 'left top' : 'top center'
+                          }}
+                          data-ai-hint={projectImage.imageHint}
+                          priority
+                        />
+                      </div>
                   )}
+                  </div>
                 </div>
               )}
-              <div className="p-5 flex flex-col flex-grow">
+              <div className="p-5 flex flex-col flex-grow rounded-b-2xl bg-card">
                 <h4 className="font-semibold text-xl mt-4">{project.title}</h4>
                 <p className="text-muted-foreground text-sm mt-2 flex-grow">{project.description}</p>
                 <div className="flex flex-wrap gap-2 mt-4 text-xs">
