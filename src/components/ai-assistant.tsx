@@ -7,6 +7,7 @@ import { Input } from './ui/input';
 import { MessageCircle, Send, X, Bot, User, Loader } from 'lucide-react';
 import { ScrollArea } from './ui/scroll-area';
 import { chatWithAssistant } from '@/ai/flows/assistant-flow';
+import { motion, AnimatePresence } from 'framer-motion';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -51,14 +52,14 @@ export default function AiAssistant() {
       console.log('Enviando mensaje al asistente...');
       const assistantResponse = await chatWithAssistant(input);
       console.log('Respuesta del asistente recibida:', assistantResponse);
-      
+
       if (!assistantResponse) {
         throw new Error('La respuesta del asistente está vacía');
       }
-      
-      const assistantMessage: Message = { 
-        role: 'assistant', 
-        content: assistantResponse || 'No pude generar una respuesta. Por favor, intenta de nuevo.' 
+
+      const assistantMessage: Message = {
+        role: 'assistant',
+        content: assistantResponse || 'No pude generar una respuesta. Por favor, intenta de nuevo.'
       };
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
@@ -67,10 +68,10 @@ export default function AiAssistant() {
         message: error instanceof Error ? error.message : 'Error desconocido',
         stack: error instanceof Error ? error.stack : undefined,
       });
-      
-      const errorMessage: Message = { 
-        role: 'assistant', 
-        content: `Lo siento, ocurrió un error: ${error instanceof Error ? error.message : 'Error desconocido'}. Por favor, inténtalo de nuevo más tarde.` 
+
+      const errorMessage: Message = {
+        role: 'assistant',
+        content: `Lo siento, ocurrió un error: ${error instanceof Error ? error.message : 'Error desconocido'}. Por favor, inténtalo de nuevo más tarde.`
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
@@ -89,77 +90,84 @@ export default function AiAssistant() {
         <span className="sr-only">Abrir chat del asistente</span>
       </Button>
 
-      {isOpen && (
-        <div className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-6 sm:w-80 md:w-96 z-50">
-          <Card className="w-full shadow-2xl border-primary/30">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-lg">Asistente de IA</CardTitle>
-              <Button variant="ghost" size="icon" onClick={toggleChat}>
-                <X className="h-4 w-4" />
-              </Button>
-            </CardHeader>
-            <CardContent>
-              <ScrollArea className="h-80 pr-4" ref={scrollAreaRef}>
-                <div className="space-y-4">
-                  {messages.map((message, index) => (
-                    <div
-                      key={index}
-                      className={`flex items-start gap-3 ${
-                        message.role === 'user' ? 'justify-end' : ''
-                      }`}
-                    >
-                      {message.role === 'assistant' && (
-                        <div className="p-2 bg-primary rounded-full text-primary-foreground">
-                          <Bot size={16} />
-                        </div>
-                      )}
-                      <p
-                        className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${
-                          message.role === 'user'
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            transition={{ duration: 0.2 }}
+            className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-6 w-auto sm:w-80 md:w-96 z-50 origin-bottom-right"
+          >
+            <Card className="w-full shadow-2xl border-primary/30 h-[70vh] sm:h-auto flex flex-col">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-lg">Asistente de IA</CardTitle>
+                <Button variant="ghost" size="icon" onClick={toggleChat}>
+                  <X className="h-4 w-4" />
+                </Button>
+              </CardHeader>
+              <CardContent className="flex-grow overflow-hidden p-0">
+                {/* Usamos flex-grow en el contenedor del ScrollArea para que ocupe el espacio disponible y no se corte */}
+                <ScrollArea className="h-full px-4 py-2" ref={scrollAreaRef}>
+                  <div className="space-y-4 pb-4">
+                    {messages.map((message, index) => (
+                      <div
+                        key={index}
+                        className={`flex items-start gap-3 ${message.role === 'user' ? 'justify-end' : ''
+                          }`}
+                      >
+                        {message.role === 'assistant' && (
+                          <div className="p-2 bg-primary rounded-full text-primary-foreground flex-shrink-0">
+                            <Bot size={16} />
+                          </div>
+                        )}
+                        <p
+                          className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${message.role === 'user'
                             ? 'bg-secondary text-secondary-foreground'
                             : 'bg-muted text-muted-foreground'
-                        }`}
-                      >
-                        {message.content}
-                      </p>
-                      {message.role === 'user' && (
-                         <div className="p-2 bg-purple-500 rounded-full text-primary-foreground">
-                          <User size={16} />
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                   {isLoading && (
-                    <div className="flex items-start gap-3">
-                       <div className="p-2 bg-primary rounded-full text-primary-foreground">
+                            }`}
+                        >
+                          {message.content}
+                        </p>
+                        {message.role === 'user' && (
+                          <div className="p-2 bg-purple-500 rounded-full text-primary-foreground flex-shrink-0">
+                            <User size={16} />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                    {isLoading && (
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 bg-primary rounded-full text-primary-foreground flex-shrink-0">
                           <Bot size={16} />
                         </div>
-                      <div className="flex items-center space-x-2">
-                        <Loader className="animate-spin" size={16}/>
-                        <p className="text-sm text-muted-foreground">Pensando...</p>
+                        <div className="flex items-center space-x-2 bg-muted rounded-lg px-3 py-2">
+                          <Loader className="animate-spin" size={12} />
+                          <p className="text-xs text-muted-foreground">Pensando...</p>
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              </ScrollArea>
-            </CardContent>
-            <CardFooter>
-              <form onSubmit={handleSendMessage} className="flex w-full gap-2">
-                <Input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Pregúntame algo..."
-                  disabled={isLoading}
-                />
-                <Button type="submit" size="icon" disabled={isLoading}>
-                  <Send />
-                  <span className="sr-only">Enviar mensaje</span>
-                </Button>
-              </form>
-            </CardFooter>
-          </Card>
-        </div>
-      )}
+                    )}
+                  </div>
+                </ScrollArea>
+              </CardContent>
+              <CardFooter className="pt-2">
+                <form onSubmit={handleSendMessage} className="flex w-full gap-2">
+                  <Input
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Pregúntame algo..."
+                    disabled={isLoading}
+                  />
+                  <Button type="submit" size="icon" disabled={isLoading}>
+                    <Send className="h-4 w-4" />
+                    <span className="sr-only">Enviar mensaje</span>
+                  </Button>
+                </form>
+              </CardFooter>
+            </Card>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
