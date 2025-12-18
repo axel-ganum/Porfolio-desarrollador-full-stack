@@ -72,8 +72,19 @@ export default function Contact() {
     <section id="contacto">
       <Card className="bg-card border-primary/20 p-8 shadow-xl animate-fadeIn" style={{ animationDelay: '0.6s', opacity: 0 }}>
         <h3 className="text-3xl font-bold mb-6">Contacto</h3>
-        <p className="text-muted-foreground mb-6 max-w-2xl">Si querés comunicarte conmigo, completá este formulario. Te responderé a la brevedad.</p>
-        
+        <p className="text-muted-foreground mb-4 max-w-2xl">Si querés comunicarte conmigo, completá este formulario. Te responderé a la brevedad.</p>
+
+        <div className="mb-6">
+          <Button asChild variant="secondary" size="lg" className="shadow-lg hover:scale-105 transition-transform">
+            <a href="/cv.pdf" download="Axel_Ganum_CV.pdf" className="inline-flex items-center gap-2">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Descargar CV
+            </a>
+          </Button>
+        </div>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField

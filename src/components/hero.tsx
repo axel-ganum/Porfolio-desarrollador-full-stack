@@ -43,6 +43,7 @@ export default function Hero() {
             que funcione bien, sea estable y fácil de mantener.
           </motion.p>
 
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -52,10 +53,19 @@ export default function Hero() {
             <Button asChild size="lg" className="shadow-lg hover:scale-105 transition-transform">
               <Link href="#proyectos">Ver mis proyectos</Link>
             </Button>
+            <Button asChild variant="secondary" size="lg" className="shadow-lg hover:scale-105 transition-transform">
+              <a href="/cv.pdf" download="Axel_Ganum_CV.pdf" className="inline-flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Descargar CV
+              </a>
+            </Button>
             <Button asChild variant="outline" size="lg" className="hover:scale-105 transition-transform">
               <Link href="#contacto">Contactar</Link>
             </Button>
           </motion.div>
+
 
           <motion.div
             initial={{ opacity: 0 }}
