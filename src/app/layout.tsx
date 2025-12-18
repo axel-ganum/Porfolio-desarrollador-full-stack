@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   title: 'Axel Ganum — Portfolio Full Stack',
   description:
     'Portfolio de Axel Ganum, Desarrollador Web Full Stack. Construyo aplicaciones web modernas, útiles y de calidad.',
+  icons: {
+    icon: [
+      {
+        url: '/icon.svg',
+        type: 'image/svg+xml',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
