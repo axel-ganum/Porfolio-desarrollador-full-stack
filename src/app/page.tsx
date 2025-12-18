@@ -14,7 +14,7 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <Hero />
-        <div className="max-w-6xl mx-auto px-6 py-20 space-y-20 md:space-y-24">
+        <div className="max-w-6xl mx-auto px-6 py-20 space-y-32 md:space-y-40">
           <Projects />
           <About />
           <Skills />
