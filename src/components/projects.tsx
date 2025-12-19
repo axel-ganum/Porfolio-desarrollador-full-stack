@@ -29,7 +29,7 @@ const projectsData = [
   {
     id: 'project-pionex-dashboard',
     title: 'Pionex Trading Dashboard',
-    description: 'Dashboard de trading que consume datos de Pionex. Las gráficas están implementadas con React ApexCharts y cuenta con un backend en Express para la gestión de datos.',
+    description: 'Dashboard avanzado de trading que consume y procesa datos en tiempo real de la API de Pionex. Incluye visualizaciones dinámicas con React ApexCharts, permitiendo el seguimiento de precios, tendencias y volúmenes. El backend, construido con Express, actúa como una capa intermedia eficiente para la gestión de datos y optimización de peticiones, garantizando una experiencia de usuario fluida y reactiva.',
     tags: ['React', 'API', 'Trading', 'ApexCharts', 'Express'],
     projectUrl: 'https://trading-frontend-desboard.vercel.app/',
     githubFrontend: 'https://github.com/axel-ganum/trading-frontend-desboard.git',

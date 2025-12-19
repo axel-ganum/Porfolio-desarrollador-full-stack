@@ -83,10 +83,10 @@ export default function AiAssistant() {
     <>
       <Button
         onClick={toggleChat}
-        className="fixed bottom-6 right-6 w-16 h-16 rounded-full shadow-lg z-50"
+        className="fixed bottom-6 right-6 w-12 h-12 rounded-full shadow-lg z-50 transition-all duration-300 hover:scale-110"
         size="icon"
       >
-        {isOpen ? <X /> : <MessageCircle />}
+        {isOpen ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
         <span className="sr-only">Abrir chat del asistente</span>
       </Button>
 

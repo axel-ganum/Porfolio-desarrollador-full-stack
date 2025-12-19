@@ -29,7 +29,7 @@ const strengths: Strength[] = [
 export default function Strengths() {
   return (
     <section id="fortalezas">
-      <h3 className="text-3xl font-bold mb-6">Lo que puedo aportar</h3>
+      <h3 className="text-3xl font-bold mb-6">Qué aporto</h3>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {strengths.map(({ icon: Icon, title, description }) => (
