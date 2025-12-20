@@ -13,9 +13,9 @@ const projectsData = [
     title: 'Task AI App',
     description: 'Gestión inteligente de tareas con AI.',
     problem: 'La sobrecarga de tareas dificulta la organización y priorización efectiva.',
-    contribution: 'Desarrollé el sistema de generación automática de tareas integrando DeepSeek (Hugging Face) y construí la arquitectura Full Stack desde cero.',
+    contribution: 'Desarrollé el sistema de generación automática de tareas integrando DeepSeek (Hugging Face), construí la arquitectura Full Stack desde cero e implementé tests automatizados con Jest.',
     challenge: 'Optimizar las llamadas a la API de AI para manejar tiempos de respuesta y asegurar la persistencia en Supabase de forma atómica.',
-    tags: ['NestJS', 'React', 'AI', 'Supabase'],
+    tags: ['NestJS', 'React', 'AI', 'Supabase', 'Jest'],
     projectUrl: 'https://taka-ai.netlify.app/',
     githubFrontend: 'https://github.com/axel-ganum/TASK-IA-FRONTEND.git',
     githubBackend: 'https://github.com/axel-ganum/Bckend-Task.git'
