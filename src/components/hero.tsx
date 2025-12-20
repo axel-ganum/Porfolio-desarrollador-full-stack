@@ -27,9 +27,9 @@ export default function Hero() {
           className="text-center"
         >
           <h2 className="text-4xl sm:text-5xl font-extrabold leading-tight">
-            Construyo aplicaciones web{' '}
+            Hola, soy Axel Ganum. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">
-              modernas, útiles y de calidad
+              Desarrollador Full Stack
             </span>
           </h2>
           <motion.p
@@ -38,9 +38,8 @@ export default function Hero() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="mt-6 text-muted-foreground text-md sm:text-lg max-w-3xl mx-auto"
           >
-            Soy un Desarrollador Full Stack apasionado por crear experiencias
-            completas: diseño del frontend, lógica del backend y arquitectura
-            que funcione bien, sea estable y fácil de mantener.
+            Especializado en crear aplicaciones web modernas y escalables.
+            Actualmente busco mi <strong>primera oportunidad profesional</strong> para aportar valor con NestJS, React y soluciones integradas con IA.
           </motion.p>
 
 

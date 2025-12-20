@@ -11,26 +11,35 @@ const projectsData = [
   {
     id: 'project-task-ia',
     title: 'Task IA App',
-    description: 'Aplicación web para gestión de tareas con generación automática de tareas usando IA (DeepSeek de Hugging Face). Desarrollada con React.js y Tailwind CSS en el frontend, y NestJS en el backend. Utiliza Supabase como base de datos. El backend está desplegado en Render (puede tardar unos segundos en cargar inicialmente por ser un plan gratuito) y el frontend en Netlify. La aplicación demuestra integración con IA y gestión de estado avanzada.',
-    tags: ['NestJS', 'React', 'IA'],
+    description: 'Gestión inteligente de tareas con IA.',
+    problem: 'La sobrecarga de tareas dificulta la organización y priorización efectiva.',
+    contribution: 'Desarrollé el sistema de generación automática de tareas integrando DeepSeek (Hugging Face) y construí la arquitectura Full Stack desde cero.',
+    challenge: 'Optimizar las llamadas a la API de IA para manejar tiempos de respuesta y asegurar la persistencia en Supabase de forma atómica.',
+    tags: ['NestJS', 'React', 'IA', 'Supabase'],
     projectUrl: 'https://taka-ai.netlify.app/',
     githubFrontend: 'https://github.com/axel-ganum/TASK-IA-FRONTEND.git',
     githubBackend: 'https://github.com/axel-ganum/Bckend-Task.git'
   },
   {
     id: 'project-mind-maps',
-    title: 'Mapas Mentales en Tiempo Real',
-    description: 'Aplicación colaborativa para creación de mapas mentales en tiempo real, desarrollada con React en el frontend y Express.js en el backend. Utiliza MongoDB Atlas como base de datos en la nube. La aplicación está desplegada en Render (puede tardar unos segundos en cargar inicialmente por ser un plan gratuito) y soporta múltiples usuarios conectados simultáneamente. Incluye funcionalidades de arrastrar y soltar, edición en tiempo real y sincronización instantánea entre usuarios.',
-    tags: ['WebSockets', 'Node.js', 'React'],
+    title: 'Mapas Mentales Pro',
+    description: 'Colaboración creativa en tiempo real.',
+    problem: 'Equipos remotos necesitaban una herramienta fluida para hacer brainstorming sin retrasos de sincronización.',
+    contribution: 'Implementé la comunicación bidireccional con WebSockets (Socket.io) y la lógica de renderizado del canvas interactivo.',
+    challenge: 'Sincronizar el estado de múltiples nodos en tiempo real evitando conflictos de edición paralela entre usuarios.',
+    tags: ['WebSockets', 'Node.js', 'React', 'MongoDB'],
     projectUrl: 'https://gorgeous-druid-40dd81.netlify.app/',
     githubFrontend: 'https://github.com/axel-ganum/mapa-mental.git',
     githubBackend: 'https://github.com/axel-ganum/Api-mapa-mental.git'
   },
   {
     id: 'project-pionex-dashboard',
-    title: 'Pionex Trading Dashboard',
-    description: 'Dashboard avanzado de trading que consume y procesa datos en tiempo real de la API de Pionex. Incluye visualizaciones dinámicas con React ApexCharts, permitiendo el seguimiento de precios, tendencias y volúmenes. El backend, construido con Express, actúa como una capa intermedia eficiente para la gestión de datos y optimización de peticiones, garantizando una experiencia de usuario fluida y reactiva.',
-    tags: ['React', 'API', 'Trading', 'ApexCharts', 'Express'],
+    title: 'Trading Dashboard',
+    description: 'Visualización de datos financieros en vivo.',
+    problem: 'La visualización de datos de trading suele ser compleja y poco intuitiva para el seguimiento rápido.',
+    contribution: 'Diseñé e implementé el dashboard dinámico utilizando ApexCharts y una capa de backend para cachear peticiones de la API externa.',
+    challenge: 'Procesar grandes volúmenes de datos en tiempo real sin degradar el rendimiento del navegador (Optimización de re-renders).',
+    tags: ['React', 'API', 'ApexCharts', 'Express'],
     projectUrl: 'https://trading-frontend-desboard.vercel.app/',
     githubFrontend: 'https://github.com/axel-ganum/trading-frontend-desboard.git',
     githubBackend: 'https://github.com/axel-ganum/trading-desboar-backend.git'
@@ -42,8 +51,12 @@ export default function Projects() {
   return (
     <section id="proyectos" className="pb-0 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h3 className="text-3xl font-bold mb-2">Proyectos destacados</h3>
-        <p className="text-muted-foreground mb-10">Una selección cuidada de lo que sé construir: IA, tiempo real, APIs, frontend y backend.</p>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+          <div>
+            <h3 className="text-3xl font-bold mb-2">Proyectos destacados</h3>
+            <p className="text-muted-foreground">Enfoque en resolución de problemas y calidad técnica.</p>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 -mx-4">
@@ -57,69 +70,68 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="h-full"
             >
               <Card
-                className="bg-card border border-primary/20 hover:scale-[1.03] transition-transform duration-300 flex flex-col overflow-hidden rounded-2xl shadow-md h-full"
+                className="bg-card border border-primary/20 hover:border-primary/50 transition-all duration-300 flex flex-col overflow-hidden rounded-2xl shadow-md h-full group"
               >
                 {projectImage && (
-                  <div className="relative w-full" style={{
-                    aspectRatio: '16/9',
-                    position: 'relative',
-                    backgroundColor: 'transparent',
-                    overflow: 'hidden'
-                  }}>
-                    <div style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      justifyContent: 'center'
-                    }}>
-                      <div style={{
-                        position: 'relative',
-                        width: '100%',
-                        height: '100%',
-                        overflow: 'hidden'
-                      }}>
-                        <Image
-                          src={projectImage.imageUrl}
-                          alt={project.title}
-                          fill
-                          className="transition-transform duration-700 hover:scale-110"
-                          style={{
-                            objectFit: 'cover',
-                            objectPosition: project.id === 'project-task-ia' ? 'left top' : 'top center'
-                          }}
-                          data-ai-hint={projectImage.imageHint}
-                          priority
-                        />
-                      </div>
+                  <div className="relative w-full aspect-video overflow-hidden">
+                    <Image
+                      src={projectImage.imageUrl}
+                      alt={project.title}
+                      fill
+                      className="transition-transform duration-700 group-hover:scale-105 object-cover"
+                      style={{
+                        objectPosition: project.id === 'project-task-ia' ? 'left top' : 'top center'
+                      }}
+                      data-ai-hint={projectImage.imageHint}
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                      <p className="text-xs text-white font-medium">Click para ver detalles</p>
                     </div>
                   </div>
                 )}
-                <div className="p-5 flex flex-col flex-grow rounded-b-2xl bg-card">
-                  <h4 className="font-semibold text-xl mt-4">{project.title}</h4>
-                  <p className="text-muted-foreground text-sm mt-2 flex-grow">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mt-4 text-xs">
+                <div className="p-6 flex flex-col flex-grow">
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-bold text-xl">{project.title}</h4>
+                  </div>
+
+                  <div className="space-y-4 flex-grow">
+                    <div>
+                      <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">El Desafío</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{project.problem}</p>
+                    </div>
+
+                    <div>
+                      <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Mi Solución</p>
+                      <p className="text-sm text-foreground leading-relaxed italic">"{project.contribution}"</p>
+                    </div>
+
+                    <div className="bg-primary/5 p-3 rounded-lg border border-primary/10">
+                      <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Dificultad Técnica</p>
+                      <p className="text-xs text-muted-foreground">{project.challenge}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 mt-6">
                     {project.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="bg-primary/20 rounded">
+                      <Badge key={tag} variant="secondary" className="bg-primary/10 text-[10px] px-2 py-0 border-primary/20">
                         {tag}
                       </Badge>
                     ))}
                   </div>
-                  <div className="mt-4 flex flex-col gap-2">
+
+                  <div className="mt-6 flex flex-col gap-2">
                     {project.projectUrl && (
                       <a
                         href={project.projectUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
-                        onClick={(e) => e.stopPropagation()}
+                        className="w-full inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-xl text-white bg-primary hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
                       >
-                        Ver Proyecto
+                        Probar Aplicación
                       </a>
                     )}
                     <div className="flex gap-2">
@@ -128,13 +140,9 @@ export default function Projects() {
                           href={project.githubFrontend}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 text-xs font-medium rounded-md border border-gray-600 hover:bg-gray-800 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 text-xs font-medium rounded-lg border border-primary/20 hover:bg-primary/5 transition-colors"
                         >
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                          </svg>
-                          Frontend
+                          Repo Front
                         </a>
                       )}
                       {project.githubBackend && (
@@ -142,13 +150,9 @@ export default function Projects() {
                           href={project.githubBackend}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 text-xs font-medium rounded-md border border-gray-600 hover:bg-gray-800 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 text-xs font-medium rounded-lg border border-primary/20 hover:bg-primary/5 transition-colors"
                         >
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                          </svg>
-                          Backend
+                          Repo Back
                         </a>
                       )}
                     </div>
