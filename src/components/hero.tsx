@@ -39,7 +39,7 @@ export default function Hero() {
             className="mt-6 text-muted-foreground text-md sm:text-lg max-w-3xl mx-auto"
           >
             Especializado en crear aplicaciones web modernas y escalables.
-            Actualmente busco mi <strong>primera oportunidad profesional</strong> para aportar valor con NestJS, React y soluciones integradas con IA.
+            Actualmente busco mi <strong>primera oportunidad profesional</strong> para aportar valor con NestJS, React y soluciones integradas con AI.
           </motion.p>
 
 

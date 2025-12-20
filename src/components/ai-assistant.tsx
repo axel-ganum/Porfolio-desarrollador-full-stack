@@ -101,7 +101,7 @@ export default function AiAssistant() {
           >
             <Card className="w-full shadow-2xl border-primary/30 h-[70vh] sm:h-auto flex flex-col">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-lg">Asistente de IA</CardTitle>
+                <CardTitle className="text-lg">Asistente de AI</CardTitle>
                 <Button variant="ghost" size="icon" onClick={toggleChat}>
                   <X className="h-4 w-4" />
                 </Button>
