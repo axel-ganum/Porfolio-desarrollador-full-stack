@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Info } from 'lucide-react';
 
 const projectsData = [
   {
@@ -57,6 +59,22 @@ export default function Projects() {
             <p className="text-muted-foreground">Enfoque en resolución de problemas y calidad técnica.</p>
           </div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-8"
+        >
+          <Alert className="bg-primary/5 border-primary/20">
+            <Info className="h-4 w-4 text-primary" />
+            <AlertTitle className="text-primary font-semibold">Nota sobre el acceso</AlertTitle>
+            <AlertDescription className="text-muted-foreground">
+              Las APIs de estos proyectos están en un plan gratuito. Al acceder por primera vez, pueden tardar unos 30-50 segundos en responder mientras el servidor se inicia. ¡Gracias por la paciencia!
+            </AlertDescription>
+          </Alert>
+        </motion.div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 -mx-4">
